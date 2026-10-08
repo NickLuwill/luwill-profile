@@ -46,6 +46,24 @@
     return fetch(API + url, opts).then(function (r) { return r.json(); });
   }
 
+  // ===== Theme =====
+  function applyTheme(theme) {
+    if (theme === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+    localStorage.setItem('luwill-theme', theme);
+  }
+
+  var savedTheme = localStorage.getItem('luwill-theme');
+  if (savedTheme) applyTheme(savedTheme);
+
+  document.getElementById('themeToggle').addEventListener('click', function () {
+    var cur = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+    applyTheme(cur === 'dark' ? 'light' : 'dark');
+  });
+
   // ===== Toast =====
   function showToast(msg) {
     var existing = document.querySelector('.toast');

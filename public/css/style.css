@@ -1,65 +1,67 @@
 /* ===== CSS Variables — Dark Theme (Default) ===== */
 :root {
-  --bg: #0b1a2e;
-  --bg-card: #132240;
-  --bg-card-hover: #1a2d4f;
+  --bg: #0d1b2a;
+  --bg-card: rgba(255, 255, 255, 0.06);
+  --bg-card-hover: rgba(255, 255, 255, 0.10);
   --text-primary: #ffffff;
   --text-secondary: #8fa4c4;
   --text-muted: #5a7194;
   --accent: #ffffff;
   --border: rgba(255, 255, 255, 0.08);
-  --border-card: rgba(255, 255, 255, 0.06);
+  --border-card: rgba(255, 255, 255, 0.08);
   --shadow: rgba(0, 0, 0, 0.4);
-  --btn-filled-bg: #ffffff;
-  --btn-filled-text: #0b1a2e;
-  --btn-outline-bg: transparent;
-  --btn-outline-border: rgba(255, 255, 255, 0.5);
-  --btn-outline-text: #ffffff;
-  --header-bg: rgba(11, 26, 46, 0.9);
+  --btn-save-bg: transparent;
+  --btn-save-text: #ffffff;
+  --btn-save-border: rgba(255, 255, 255, 0.4);
+  --btn-share-bg: #ffffff;
+  --btn-share-text: #0d1b2a;
+  --header-bg: rgba(13, 27, 42, 0.92);
   --toast-bg: #ffffff;
-  --toast-text: #0b1a2e;
+  --toast-text: #0d1b2a;
   --divider: rgba(255, 255, 255, 0.15);
   --avatar-bg: #1a2d4f;
-  --avatar-ring: rgba(255, 255, 255, 0.1);
-  --slogan-color: rgba(255, 255, 255, 0.35);
+  --avatar-ring: rgba(255, 255, 255, 0.08);
+  --slogan-color: rgba(255, 255, 255, 0.30);
   --icon-color: #ffffff;
-  --arrow-color: rgba(255, 255, 255, 0.3);
-  --footer-color: rgba(255, 255, 255, 0.25);
+  --arrow-color: rgba(255, 255, 255, 0.25);
+  --footer-color: rgba(255, 255, 255, 0.20);
   --lang-border: rgba(255, 255, 255, 0.2);
   --lang-hover: rgba(255, 255, 255, 0.1);
-  --upload-overlay: rgba(0, 0, 0, 0.45);
+  --wave-color: rgba(255, 255, 255, 0.03);
+  --sig-color: rgba(255, 255, 255, 0.25);
 }
 
 /* ===== Light Theme ===== */
 [data-theme="light"] {
-  --bg: #eef1f6;
+  --bg: #f0f2f5;
   --bg-card: #ffffff;
-  --bg-card-hover: #f5f7fa;
+  --bg-card-hover: #f8f9fa;
   --text-primary: #1a2744;
   --text-secondary: #5a6a8a;
   --text-muted: #8a96a8;
   --accent: #1a2744;
   --border: rgba(26, 39, 68, 0.08);
-  --border-card: rgba(26, 39, 68, 0.06);
+  --border-card: rgba(26, 39, 68, 0.08);
   --shadow: rgba(26, 39, 68, 0.08);
-  --btn-filled-bg: #1a2744;
-  --btn-filled-text: #ffffff;
-  --btn-outline-bg: transparent;
-  --btn-outline-border: #1a2744;
-  --btn-outline-text: #1a2744;
-  --header-bg: rgba(238, 241, 246, 0.92);
+  --btn-save-bg: #e4e8ee;
+  --btn-save-text: #1a2744;
+  --btn-save-border: transparent;
+  --btn-share-bg: #1a2744;
+  --btn-share-text: #ffffff;
+  --header-bg: rgba(240, 242, 245, 0.92);
   --toast-bg: #1a2744;
   --toast-text: #ffffff;
   --divider: #d0d5de;
   --avatar-bg: #dce1ea;
-  --avatar-ring: rgba(26, 39, 68, 0.1);
-  --slogan-color: rgba(26, 39, 68, 0.4);
+  --avatar-ring: rgba(26, 39, 68, 0.08);
+  --slogan-color: rgba(26, 39, 68, 0.35);
   --icon-color: #1a2744;
-  --arrow-color: rgba(26, 39, 68, 0.3);
-  --footer-color: rgba(26, 39, 68, 0.35);
+  --arrow-color: rgba(26, 39, 68, 0.2);
+  --footer-color: rgba(26, 39, 68, 0.30);
   --lang-border: rgba(26, 39, 68, 0.2);
   --lang-hover: rgba(26, 39, 68, 0.06);
-  --upload-overlay: rgba(255, 255, 255, 0.5);
+  --wave-color: rgba(26, 39, 68, 0.025);
+  --sig-color: rgba(26, 39, 68, 0.18);
 }
 
 /* ===== Reset ===== */
@@ -83,6 +85,34 @@ body {
   transition: background 0.4s ease, color 0.4s ease;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ===== Wave Background ===== */
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::before {
+  background:
+    radial-gradient(ellipse 600px 400px at 15% 25%, var(--wave-color) 0%, transparent 70%),
+    radial-gradient(ellipse 500px 350px at 85% 55%, var(--wave-color) 0%, transparent 70%),
+    radial-gradient(ellipse 400px 300px at 40% 80%, var(--wave-color) 0%, transparent 70%);
+}
+
+body::after {
+  background:
+    radial-gradient(ellipse 350px 250px at 70% 15%, var(--wave-color) 0%, transparent 70%),
+    radial-gradient(ellipse 450px 350px at 20% 60%, var(--wave-color) 0%, transparent 70%);
 }
 
 a {
@@ -106,6 +136,8 @@ button {
   display: flex;
   flex-direction: column;
   padding-bottom: env(safe-area-inset-bottom, 0);
+  position: relative;
+  z-index: 1;
 }
 
 /* ===== Header ===== */
@@ -143,6 +175,49 @@ button {
   font-weight: 400;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.theme-toggle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  transition: background 0.25s ease;
+}
+
+.theme-toggle:hover {
+  background: var(--lang-hover);
+}
+
+.theme-icon {
+  width: 18px;
+  height: 18px;
+}
+
+[data-theme="light"] .icon-sun {
+  display: none;
+}
+
+[data-theme="light"] .icon-moon {
+  display: block;
+}
+
+:root .icon-moon,
+.icon-moon {
+  display: none;
+}
+
+:root .icon-sun {
+  display: block;
+}
+
 .lang-toggle {
   display: flex;
   align-items: center;
@@ -176,26 +251,21 @@ button {
 .avatar-wrap {
   display: flex;
   justify-content: center;
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
 .avatar {
   position: relative;
-  width: 108px;
-  height: 108px;
-  border-radius: 50%;
+  width: 110px;
+  height: 110px;
+  border-radius: 18px;
   overflow: hidden;
   background: var(--avatar-bg);
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 8px 32px var(--shadow);
-  cursor: pointer;
   transition: transform 0.25s ease;
-}
-
-.avatar:hover {
-  transform: scale(1.03);
 }
 
 .avatar img {
@@ -213,43 +283,35 @@ button {
   user-select: none;
 }
 
-.avatar-upload-overlay {
-  position: absolute;
-  inset: 0;
-  background: var(--upload-overlay);
+/* ===== Name Row with Signature ===== */
+.name-row {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: center;
-  opacity: 0;
-  transition: opacity 0.25s ease;
-  border-radius: 50%;
+  gap: 8px;
 }
 
-.avatar:hover .avatar-upload-overlay {
-  opacity: 1;
-}
-
-.avatar-upload-overlay svg {
-  width: 28px;
-  height: 28px;
-  color: #ffffff;
-}
-
-.avatar-input {
-  display: none;
+.signature {
+  font-family: 'Dancing Script', 'Georgia', cursive;
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--sig-color);
+  line-height: 1;
+  user-select: none;
 }
 
 .name {
   font-size: 26px;
   font-weight: 700;
   letter-spacing: 0.5px;
-  margin-bottom: 2px;
   color: var(--text-primary);
+  line-height: 1.2;
 }
 
 .name-cn {
   font-size: 15px;
   color: var(--text-secondary);
+  margin-top: 4px;
   margin-bottom: 14px;
   font-weight: 400;
 }
@@ -264,27 +326,9 @@ button {
 
 .title {
   font-size: 14px;
-  font-weight: 600;
-  color: var(--text-primary);
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-}
-
-.title-cn {
-  font-size: 13px;
+  font-weight: 500;
   color: var(--text-secondary);
-  margin-top: 2px;
-  font-weight: 400;
-}
-
-.signature {
-  font-family: "Georgia", "Times New Roman", serif;
-  font-style: italic;
-  font-size: 30px;
-  color: var(--text-muted);
-  margin-top: 10px;
-  opacity: 0.5;
-  user-select: none;
+  letter-spacing: 1px;
 }
 
 /* ===== Slogan ===== */
@@ -397,19 +441,18 @@ button {
 }
 
 .btn-save {
-  background: var(--btn-outline-bg);
-  color: var(--btn-outline-text);
-  border: 1.5px solid var(--btn-outline-border);
+  background: var(--btn-save-bg);
+  color: var(--btn-save-text);
+  border: 1.5px solid var(--btn-save-border);
 }
 
 .btn-save:hover {
-  background: var(--btn-outline-border);
-  color: var(--bg);
+  opacity: 0.85;
 }
 
 .btn-share {
-  background: var(--btn-filled-bg);
-  color: var(--btn-filled-text);
+  background: var(--btn-share-bg);
+  color: var(--btn-share-text);
 }
 
 .btn-share:hover {
@@ -456,70 +499,15 @@ button {
   transform: translateX(-50%) translateY(0);
 }
 
-/* ===== QR Section ===== */
-.qr-section {
-  text-align: center;
-  padding: 12px 18px 8px;
-}
-
-.qr-label {
-  font-size: 11px;
-  letter-spacing: 2px;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  margin-bottom: 16px;
-  font-weight: 500;
-}
-
-.qr-card {
-  display: inline-block;
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 16px;
-  box-shadow: 0 4px 24px var(--shadow);
-}
-
-.qr-card img {
-  width: 180px;
-  height: 180px;
-  display: block;
-}
-
-.btn-qr-download {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 16px;
-  padding: 10px 24px;
-  border-radius: 10px;
-  background: transparent;
-  border: 1.5px solid var(--btn-outline-border);
-  color: var(--btn-outline-text);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-family: inherit;
-}
-
-.btn-qr-download:hover {
-  background: var(--btn-outline-border);
-  color: var(--bg);
-}
-
-.btn-qr-download svg {
-  width: 16px;
-  height: 16px;
-}
-
 /* ===== Loading ===== */
 .loading {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: var(--bg, #0b1a2e);
+  background: var(--bg, #0d1b2a);
+  position: relative;
+  z-index: 1;
 }
 
 .loading-spinner {
@@ -542,7 +530,7 @@ button {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: #0b1a2e;
+  background: #0d1b2a;
   gap: 16px;
 }
 
@@ -572,8 +560,10 @@ button {
   .contact-value {
     font-size: 12px;
   }
-  .qr-card img {
-    width: 150px;
-    height: 150px;
+  .signature {
+    font-size: 26px;
+  }
+  .name {
+    font-size: 22px;
   }
 }

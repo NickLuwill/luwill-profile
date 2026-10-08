@@ -11,8 +11,6 @@
       saveContact: '保存联系人',
       share: '分享',
       langLabel: 'English',
-      qrLabel: '我的专属二维码',
-      downloadQr: '下载二维码',
       toastSaved: '联系人已保存',
       toastCopied: '链接已复制到剪贴板',
       toastWechat: '微信号',
@@ -26,8 +24,6 @@
       saveContact: 'Save Contact',
       share: 'Share',
       langLabel: '中文',
-      qrLabel: 'My QR Code',
-      downloadQr: 'Download QR',
       toastSaved: 'Contact saved',
       toastCopied: 'Link copied to clipboard',
       toastWechat: 'WeChat ID',
@@ -59,25 +55,20 @@
 
   // ===== Theme =====
   function applyTheme(theme) {
-    if (theme === 'light') document.documentElement.setAttribute('data-theme', 'light');
-    else document.documentElement.removeAttribute('data-theme');
+    if (theme === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
     localStorage.setItem('luwill-theme', theme);
   }
 
   var savedTheme = localStorage.getItem('luwill-theme');
   if (savedTheme) applyTheme(savedTheme);
 
-  var logoEl = document.querySelector('.logo');
-  var logoTapCount = 0, logoTapTimer = null;
-  logoEl.addEventListener('click', function () {
-    logoTapCount++;
-    if (logoTapCount === 1) logoTapTimer = setTimeout(function () { logoTapCount = 0; }, 400);
-    else if (logoTapCount >= 2) {
-      clearTimeout(logoTapTimer);
-      logoTapCount = 0;
-      var cur = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
-      applyTheme(cur === 'dark' ? 'light' : 'dark');
-    }
+  document.getElementById('themeToggle').addEventListener('click', function () {
+    var cur = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+    applyTheme(cur === 'dark' ? 'light' : 'dark');
   });
 
   // ===== Toast =====
@@ -101,7 +92,6 @@
       .then(function (data) {
         emp = data;
         renderProfile(emp);
-        loadQR(slug);
         document.getElementById('loading').style.display = 'none';
         document.getElementById('profilePage').style.display = 'flex';
       })
@@ -128,11 +118,20 @@
     }
 
     // Name & Title
+    var firstName = e.name.split(' ')[0];
     document.getElementById('empName').textContent = e.name;
     document.getElementById('empNameCn').textContent = e.name_cn || '';
-    document.getElementById('empTitle').textContent = e.title || '';
-    document.getElementById('empTitleCn').textContent = e.title_cn || '';
-    document.getElementById('empSignature').textContent = e.name.split(' ')[0];
+    document.getElementById('empSignature').textContent = firstName;
+
+    var titleText = e.title || '';
+    var titleCnText = e.title_cn || '';
+    var combinedTitle = titleText;
+    if (titleText && titleCnText) {
+      combinedTitle = titleText + ' / ' + titleCnText;
+    } else if (titleCnText) {
+      combinedTitle = titleCnText;
+    }
+    document.getElementById('empTitle').textContent = combinedTitle;
 
     // Contacts
     var contactsList = document.getElementById('contactsList');
@@ -190,25 +189,6 @@
   function linkedinIcon() { return '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>'; }
   function instagramIcon() { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>'; }
   function websiteIcon() { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>'; }
-
-  // ===== QR Code =====
-  function loadQR(slug) {
-    fetch('/api/qrcode/' + slug)
-      .then(function (r) { return r.json(); })
-      .then(function (data) {
-        if (data.qr) document.getElementById('qrCodeImg').src = data.qr;
-      });
-  }
-
-  document.getElementById('downloadQr').addEventListener('click', function () {
-    var img = document.getElementById('qrCodeImg');
-    if (img.src) {
-      var a = document.createElement('a');
-      a.href = img.src;
-      a.download = 'qrcode.png';
-      a.click();
-    }
-  });
 
   // ===== Save Contact =====
   document.getElementById('saveContact').addEventListener('click', function () {

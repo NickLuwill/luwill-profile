@@ -8,7 +8,7 @@ const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'luwill2024';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'LUWILL2026';
 
 // Middleware
 app.use(cors());
