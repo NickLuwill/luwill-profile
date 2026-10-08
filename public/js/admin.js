@@ -174,6 +174,58 @@
     document.getElementById('empSort').value = '0';
     document.getElementById('empAvatarPath').value = '';
     avatarPreview.innerHTML = '<span class="avatar-placeholder-text">点击上传头像</span>';
+    clearCustomContacts();
+  }
+
+  // ===== Custom Contacts =====
+  function clearCustomContacts() {
+    var list = document.getElementById('customContactsList');
+    if (list) list.innerHTML = '';
+  }
+
+  function addContactRow(type, value) {
+    var list = document.getElementById('customContactsList');
+    if (!list) return;
+    var row = document.createElement('div');
+    row.className = 'contact-row';
+    row.innerHTML =
+      '<input type="text" class="contact-type-input" placeholder="平台名称 (如 Telegram)" value="' + (type || '') + '">' +
+      '<input type="text" class="contact-value-input" placeholder="联系方式 (如 @username)" value="' + (value || '') + '">' +
+      '<button type="button" class="btn-remove-contact" title="删除">&times;</button>';
+    row.querySelector('.btn-remove-contact').addEventListener('click', function () {
+      row.remove();
+    });
+    list.appendChild(row);
+  }
+
+  window.addContactRow = addContactRow;
+
+  function getCustomContacts() {
+    var rows = document.querySelectorAll('#customContactsList .contact-row');
+    var contacts = [];
+    rows.forEach(function (row) {
+      var type = row.querySelector('.contact-type-input').value.trim();
+      var value = row.querySelector('.contact-value-input').value.trim();
+      if (type && value) {
+        contacts.push({ type: type, value: value });
+      }
+    });
+    return contacts;
+  }
+
+  function loadCustomContacts(contactsJson) {
+    clearCustomContacts();
+    if (!contactsJson) return;
+    var contacts;
+    if (typeof contactsJson === 'string') {
+      try { contacts = JSON.parse(contactsJson); } catch (e) { return; }
+    } else {
+      contacts = contactsJson;
+    }
+    if (!Array.isArray(contacts)) return;
+    contacts.forEach(function (c) {
+      if (c.type && c.value) addContactRow(c.type, c.value);
+    });
   }
 
   function openAddForm() {
@@ -207,6 +259,7 @@
       } else {
         avatarPreview.innerHTML = '<span class="avatar-placeholder-text">点击上传头像</span>';
       }
+      loadCustomContacts(emp.contacts);
       modalTitle.textContent = '编辑员工';
       modalOverlay.style.display = 'flex';
     });
@@ -269,6 +322,7 @@
       website: document.getElementById('empWebsite').value.trim(),
       avatar_path: document.getElementById('empAvatarPath').value,
       sort_order: parseInt(document.getElementById('empSort').value) || 0,
+      contacts: getCustomContacts(),
     };
 
     var req;

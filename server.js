@@ -53,6 +53,12 @@ db.exec(`
   )
 `);
 
+try {
+  db.exec(`ALTER TABLE employees ADD COLUMN contacts TEXT DEFAULT '[]'`);
+} catch (e) {
+  // column already exists
+}
+
 // Multer config for avatar upload
 const storage = multer.diskStorage({
   destination: path.join(__dirname, 'uploads'),
@@ -105,25 +111,25 @@ app.get('/api/employees/:slug', (req, res) => {
 
 // Create employee
 app.post('/api/employees', requireAuth, (req, res) => {
-  const { slug, name, name_cn, title, title_cn, email, phone, wechat, linkedin, instagram, website, sort_order } = req.body;
+  const { slug, name, name_cn, title, title_cn, email, phone, wechat, linkedin, instagram, website, sort_order, contacts } = req.body;
   if (!slug || !name) return res.status(400).json({ error: 'slug and name are required' });
 
   const stmt = db.prepare(`
-    INSERT INTO employees (slug, name, name_cn, title, title_cn, email, phone, wechat, linkedin, instagram, website, sort_order)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO employees (slug, name, name_cn, title, title_cn, email, phone, wechat, linkedin, instagram, website, sort_order, contacts)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `);
-  const result = stmt.run(slug, name, name_cn || '', title || '', title_cn || '', email || '', phone || '', wechat || '', linkedin || '', instagram || '', website || '', sort_order || 0);
+  const result = stmt.run(slug, name, name_cn || '', title || '', title_cn || '', email || '', phone || '', wechat || '', linkedin || '', instagram || '', website || '', sort_order || 0, JSON.stringify(contacts || []));
   res.json({ id: result.lastInsertRowid, slug });
 });
 
 // Update employee
 app.put('/api/employees/:id', requireAuth, (req, res) => {
-  const { name, name_cn, title, title_cn, email, phone, wechat, linkedin, instagram, website, avatar_path, sort_order, active } = req.body;
+  const { name, name_cn, title, title_cn, email, phone, wechat, linkedin, instagram, website, avatar_path, sort_order, active, contacts } = req.body;
   const stmt = db.prepare(`
-    UPDATE employees SET name=?, name_cn=?, title=?, title_cn=?, email=?, phone=?, wechat=?, linkedin=?, instagram=?, website=?, avatar_path=?, sort_order=?, active=?, updated_at=CURRENT_TIMESTAMP
+    UPDATE employees SET name=?, name_cn=?, title=?, title_cn=?, email=?, phone=?, wechat=?, linkedin=?, instagram=?, website=?, avatar_path=?, sort_order=?, active=?, contacts=?, updated_at=CURRENT_TIMESTAMP
     WHERE id=?
   `);
-  stmt.run(name, name_cn || '', title || '', title_cn || '', email || '', phone || '', wechat || '', linkedin || '', instagram || '', website || '', avatar_path || '', sort_order || 0, active !== undefined ? active : 1, req.params.id);
+  stmt.run(name, name_cn || '', title || '', title_cn || '', email || '', phone || '', wechat || '', linkedin || '', instagram || '', website || '', avatar_path || '', sort_order || 0, active !== undefined ? active : 1, JSON.stringify(contacts || []), req.params.id);
   res.json({ success: true });
 });
 
