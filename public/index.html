@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="LUWILL - A Scent | A Presence. Guangzhou Luwill Biotechnology Co., Ltd.">
+  <title>LUWILL | A Scent | A Presence</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>L</text></svg>">
+  <style>
+    .home {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 40px 24px;
+    }
+    .home-logo {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: 6px;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .home-tagline {
+      font-size: 12px;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      margin-bottom: 48px;
+    }
+    .home-divider {
+      width: 40px;
+      height: 1.5px;
+      background: var(--divider);
+      margin: 0 auto 48px;
+      border-radius: 1px;
+    }
+    .home-slogan {
+      font-size: 11px;
+      letter-spacing: 4px;
+      color: var(--slogan-color);
+      text-transform: uppercase;
+      margin-bottom: 56px;
+      font-weight: 500;
+    }
+    .home-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border-radius: 12px;
+      background: var(--btn-filled-bg);
+      color: var(--btn-filled-text);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      transition: opacity 0.2s;
+    }
+    .home-link:hover { opacity: 0.9; }
+    .home-footer {
+      position: fixed;
+      bottom: 24px;
+      left: 0;
+      right: 0;
+      text-align: center;
+    }
+    .home-footer p {
+      font-size: 9px;
+      letter-spacing: 2.5px;
+      color: var(--footer-color);
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+  <div class="home">
+    <div class="home-logo">LUWILL</div>
+    <p class="home-tagline">A Scent | A Presence</p>
+    <div class="home-divider"></div>
+    <p class="home-slogan">SCENT CREATES A BETTER TOMORROW.</p>
+    <a href="/admin" class="home-link">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7"/>
+        <rect x="14" y="3" width="7" height="7"/>
+        <rect x="14" y="14" width="7" height="7"/>
+        <rect x="3" y="14" width="7" height="7"/>
+      </svg>
+      管理后台
+    </a>
+  </div>
+  <div class="home-footer">
+    <p>GUANGZHOU LUWILL BIOTECHNOLOGY CO., LTD.</p>
+  </div>
+</body>
+</html>
